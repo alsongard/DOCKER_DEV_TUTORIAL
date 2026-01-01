@@ -1,0 +1,20 @@
+# Alpine Linux is a security-oriented, lightweight Linux distribution based on musl libc and busybox.
+FROM alpine:latest
+
+
+# Install Bash
+RUN apk update && apk add bash
+
+# Use /usr/src/app as your working directory: All command will be executed in this directory
+WORKDIR /usr/src/app
+
+
+# Copy file hello.sh to working directory
+COPY hello_test.sh .
+
+# modify file permission
+# chmod u+x hello.sh
+
+# Command to execute when running docker
+CMD ["./hello_test.sh"]
+
