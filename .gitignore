@@ -1,0 +1,6 @@
+*/*.mp4
+*/*.webm
+
+/material-applications
+/utilizingregistry/rails-example-project/
+/javaSpringProject/spring-example-project/
