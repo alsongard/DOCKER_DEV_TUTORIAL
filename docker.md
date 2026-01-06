@@ -1,3 +1,4 @@
+
 # DEVOPS
 DevOps is a development methodology aimed at bridging the gap between Development and Operations, emphasizing communication and collaboration, continuous integration, quality assurance and delivery with automated deployment utilizing a set of development practices".
 
@@ -354,7 +355,7 @@ One can have multiple Dockerfile within the same directory the only difference i
 Example:
 Dockerfile.test   
 ```bash
-docker build -t imageName -f fileName directory/pathtoDockerfile.something
+docker buildj -t imageName -f fileName directory/pathtoDockerfile.something
 docker build -t testing -f Dockerfile.test .
 docker container run --name testerv1 hello-tester
 ```
@@ -420,3 +421,69 @@ In the shell form, the command is provided as a string without brackets. In the 
 | ``ENTRYPOINT ["/bin/ping","-c","3"] CMD localhost`` | /bin/ping -c 3 /bin/sh -c localhost |
 | ``ENTRYPOINT /bin/ping -c 3 CMD ["localhost"]`` | /bin/sh -c '/bin/ping -c 3' localhost |
 | ``ENTRYPOINT ["/bin/ping","-c","3"] CMD ["localhost"]`` | /bin/ping -c 3 localhost |
+
+
+
+# Interacting with the container via volumes and ports
+
+using volumes:
+In the command: docker container run -v "$(pwd):/mydir" imageName
+    -v is the flag for volumes.
+    "$(pwd)" is a command substitution that gets the current working directory on the host (where you are running the command).
+    :/mydir specifies the directory inside the container where the host directory will be mounted.
+
+
+```bash
+docker run -v "$(pwd):\mydir" --name trial-vidoes download-videos:v1
+```
+This downloads a video
+A Docker volume is essentially a shared directory or file between the host machine and the container. When a program running inside the container modifies a file within this volume, the changes are preserved even after the container is shut down and removed, as the file resides on the host machine.
+
+
+The flag: ``-v "$(pwd)"`` makes this directory accessible to my container and any changes that either occur in the container or my device is seen in either (container and my machine)
+
+
+The -v "$(pwd):/mydir" bind mount creates a two-way (bidirectional) synchronization between your current host directory and /mydir in the container:
+    Files from your current directory are immediately available inside the container.
+    Any changes made inside the container (e.g., new files, edits, deletions) are reflected on the host.
+    Any changes made on the host are immediately visible inside the container.
+This behavior is the default for Docker bind mounts on most platforms, though performance and edge cases (e.g
+., file deletion, inotify events) may vary on macOS and Windows due to filesystem translation layers.
+
+
+Solution:
+```bash
+docker container run -v "$(pwd)/text.log:/usr/src/app/text.log" --name simple-web devopsdockerruh:simple-web-service:ubuntu
+```
+
+
+## Allowing external connections into containers​
+Sending messages: Programs can send messages to URL (opens in a new tab) (opens in a new tab) addresses such as this: http://127.0.0.1:3000 (opens in a new tab) (opens in a new tab) where HTTP is the protocol (opens in a new tab) (opens in a new tab), 127.0.0.1 is an IP address, and 3000 is a port (opens in a new tab) (opens in a new tab). Note the IP part could also be a hostname (opens in a new tab) (opens in a new tab): 127.0.0.1 is also called localhost (opens in a new tab) (opens in a new tab)
+ so instead you could use http://localhost:3000.
+Receiving messages: Programs can be assigned to listen to any available port. If a program is listening for traffic on port 3000, and a message is sent to that port, the program will receive and possibly process it.
+
+
+It is possible to map a port on your host machine to a container port. For example, if you map port 1000 on your host machine to port 2000 in the container, and then send a message to http://localhost:1000 on your computer, the container will receive that message if it's listening to its port 2000.
+
+
+Opening a connection from the outside world to a Docker container happens in two steps:
+    Exposing port
+    Publishing port
+Exposing a container port means informing Docker that the container listens to a certain port. This doesn't do much, except it helps humans with the configuration.
+Publishing a port means that Docker will map host ports to the container ports.
+To expose a port, add the line EXPOSE <port> in your Dockerfile
+To publish a port, run the container with -p <host-port>:<container-port>
+If you leave out the host port and only specify the container port, Docker will automatically choose a free port as the host port:
+
+
+
+```bash
+docker run -p 4567:contianer_port imageName
+```
+We could also limit connections to a certain protocol only, e.g. UDP by adding the protocol at the end: EXPOSE <port>/udp and -p <host-port>:<container-port>/udp.
+
+
+# Utilizing tools from the Registry
+```bash
+docker container run -p 5000:3000 gemtrial
+```
