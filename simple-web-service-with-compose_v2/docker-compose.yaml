@@ -1,0 +1,7 @@
+services:
+  mysimplewebservice:
+    image: devopsdockeruh/simple-web-service
+    ports:
+      - 5000:8080
+    command: 
+      'server'

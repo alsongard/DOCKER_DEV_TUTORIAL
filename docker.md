@@ -575,19 +575,26 @@ docker compose ps
 
 [link](https://docs.docker.com/reference/cli/docker/compose/)
 
-answers to question 1.4
-Dockerfile:
-```
-# GET YOUR MINIMAL IMAGE: WHAT IS NECESSARY TO RUN SCRIPT
-FROM devopsdockeruh/simple-web-service
-```
-Dockercompose:
-```
+
+If an image is alread provided you could just set it in compose.yaml file as shown:
+```yaml
 services:
-  mysimplewebservice: # name of the service
-    image: testwebservice:latest
-    build: .
-    volumes:
-      - ./my-log.log:/usr/src/app/text.log
-    container_name: mine1
+  mysimplewhoami:
+    image:imageName/repository
+    ports:
+      - 8000:8000
+
+```
+run  in the directory:
+``docker compose up -d``
+
+
+**Passing variables**  
+```yaml
+services:
+  backend:
+    image:
+    environment:
+      - VARIABLE=VALUE
+      - VARIABLE2=VALUE2
 ```
