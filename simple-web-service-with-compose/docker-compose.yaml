@@ -1,0 +1,7 @@
+services:
+  mysimplewebservice: # name of the service
+    image: devopsdockeruh/simple-web-service
+    build: .
+    volumes:
+      - ./my-log.log:/usr/src/app/text.log
+    container_name: mine1
