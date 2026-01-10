@@ -24,6 +24,11 @@ To run an image we use:
 docker container run <image_name>
 ```
 
+To automatically run and remove a container we use:
+```bash
+docker container run --rm imageName
+```
+
 To remove an image we use:
 ```bash
 docker image rm <image_name>
@@ -56,6 +61,7 @@ docker system prune: remove images
 docker container prune: remove containers not running
 docerk image prune: remove images not in uuse
 ```
+
 
 
 To get an imge  we use the command:
