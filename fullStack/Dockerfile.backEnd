@@ -1,0 +1,15 @@
+FROM  golang:1.16.15-bullseye
+
+ENV REQUEST_ORIGIN=http://localhost:5000
+EXPOSE 8080
+
+WORKDIR /mydir
+
+COPY example-backend/ .
+
+RUN go build
+
+RUN go test .
+
+
+CMD [ "./server" ]
