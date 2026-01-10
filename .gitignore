@@ -1,6 +1,8 @@
 */*.mp4
 */*.webm
 
-/material-applications
-/utilizingregistry/rails-example-project/
-/javaSpringProject/spring-example-project/
+material-applications/
+/*/rails-example-project/
+/*/spring-example-project/
+*/example-backend/
+*/example-frontend/
