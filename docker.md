@@ -493,3 +493,101 @@ We could also limit connections to a certain protocol only, e.g. UDP by adding t
 ```bash
 docker container run -p 5000:3000 gemtrial
 ```
+
+
+
+## Intro to Compose
+create a docker-compose.yaml file in the following:
+```yaml
+services:
+  yt-dlp-ubuntu:
+    image: <username>/<repositoryname>
+    build: .
+    volumes:
+      - .:/mydir
+    container_name: yt-dlp
+```
+
+command:
+```bash
+docker compose build
+docker compose push
+```
+
+in the above the - represents the 
+The - (single hyphen) in the volumes: section of a compose.yaml file indicates a list item in YAML syntax.
+
+Since volumes is an array (list), each volume must be prefixed with a - to denote a separate ent
+ry.
+
+Example:
+volumes:
+  - .:/mydir
+    The - means: "here is one volume mapping"
+    .: is the host current directory
+    /mydir is the container path
+
+
+
+**Info**  
+``docker service someString``
+This is a top-level section that defines all the containers (services) that make up your application.
+Each service runs in its own container and can be configured independently.
+someString
+    This is the service name (e.g., web, db, app).
+It acts as a hostname for communication between containers.
+
+Used in commands like docker compose up someString to control individual services.
+
+**Scenario**  
+Now to just use an image do the following:
+```
+services:
+  yt-dlp-ubuntu:
+    image: <username>/<repositoryname>
+    build: .
+    volumes:
+      - .:/mydir
+    container_name: yt-dlp
+```
+
+**Docker compose up commands**
+To start all services defined in a docker-compose.yaml file
+```bash
+docker compose up
+```
+
+To stop ad remove running services
+```bash
+docker compos down
+```
+
+Monitor the output /logs of running services:
+```bash
+docker compose logs
+```
+
+
+List all services along with the current status
+```bash
+docker compose ps
+```
+
+[link](https://docs.docker.com/reference/cli/docker/compose/)
+
+answers to question 1.4
+Dockerfile:
+```
+# GET YOUR MINIMAL IMAGE: WHAT IS NECESSARY TO RUN SCRIPT
+FROM devopsdockeruh/simple-web-service
+```
+Dockercompose:
+```
+services:
+  mysimplewebservice: # name of the service
+    image: testwebservice:latest
+    build: .
+    volumes:
+      - ./my-log.log:/usr/src/app/text.log
+    container_name: mine1
+```
