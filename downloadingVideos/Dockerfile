@@ -20,4 +20,5 @@ EOF
 # NOW TO RUN THIS 
 # CMD ["/usr/local/bin/yt-dlp", "param1"]
 ENTRYPOINT [ "/usr/local/bin/yt-dlp" ]
+# ENTRYPOINT [ "/bin/sh" ] 
 CMD ["https://www.youtube.com/watch?v=Aa55RKWZxx"]
