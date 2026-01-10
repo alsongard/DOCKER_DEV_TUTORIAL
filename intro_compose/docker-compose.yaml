@@ -1,0 +1,7 @@
+services:
+  yt-dlp-ubuntu:
+    image: alsongard/intro2componse
+    build: .
+    volumes:
+      - .:/mydir
+    container_name: yt-dlp
