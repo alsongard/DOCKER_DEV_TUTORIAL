@@ -1,0 +1,13 @@
+services:
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.colasloth.com
+  proxy:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
+
+# WITHOUT THE ENVIRONMENT SETUP WE WILL GGET AN ERROR: WHY? Because nginx will not know which service is request

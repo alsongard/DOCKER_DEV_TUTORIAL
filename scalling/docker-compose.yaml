@@ -1,0 +1,8 @@
+services:
+  runwhoiam:
+    image: jwilder/whoami
+    ports:
+      - 8000
+
+
+# in this file we only set the container port, the host port is randomised and can be viewed using the command: docker ps -a
