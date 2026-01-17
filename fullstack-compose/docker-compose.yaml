@@ -1,18 +1,37 @@
+
+networks:
+  mynetwork:
+    external: true
+    name: mynetwork
+
 services:
-  mybackend:
-    image:
+  redis:
+    image: redis
     ports:
-      - 3000: 8080
+      - "6379:6379"
+    networks:
+      - mynetwork
+  mybackend:
+    image: backend:v5
+    ports:
+      - "3000:8080"
     environment:
-      - REQUEST_ORIGIN=http://localhost:5000
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - mynetwork 
     command: 
-      server
+      ["./server" ]
+
 
   myfrontend:
-    image:
+    image: frontend:v5
     ports:
-      5000:5000
-    environment:
-      - REACT_APP_BACKEND_URL=http://localhost:3000
+      - "5000:5000"
+    networks:
+      - mynetwork 
+    # environment:
+    #   - REACT_APP_BACKEND_URL=http://localhost:3000
     command: 
-      ['server', '-s', '-l', '5000', 'build']
+      ['serve', '-s', '-l', '5000', 'build']
